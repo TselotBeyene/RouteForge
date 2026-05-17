@@ -18,7 +18,7 @@ export default function HomePage() {
           <span className="status-pill text-teal-700 dark:text-teal-300">Backend API Required</span>
         </div>
         <h1 className="max-w-5xl font-mono text-5xl font-black uppercase leading-[0.92] tracking-[-0.08em] text-[hsl(var(--ink))] sm:text-7xl">
-          Itas-studio Integrations Management.
+          Integrations Management.
         </h1>
         <p className="mt-7 max-w-3xl text-base leading-8 text-[hsl(var(--muted-ink))]">
         Browse integrations, edit files, and explore routes.

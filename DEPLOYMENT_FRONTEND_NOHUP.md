@@ -33,5 +33,3 @@ FRONTEND_BACKEND_URL=http://127.0.0.1:8080
 FRONTEND_KARAVAN_URL=http://localhost:8081
 FRONTEND_HAWTIO_URL=https://camel.hawt.io/online/login?redirectUri=http%3A%2F%2Fcamel.hawt.io%2Fonline%2F
 ```
-
-The backend URL defaults to `http://127.0.0.1:8080` because backend and frontend run on the same server. Backend runtime credentials stay in `/home/test/tselot_Studio/backend/backend.env`; frontend runtime settings stay in `/home/test/tselot_Studio/frontend/frontend.env`.
