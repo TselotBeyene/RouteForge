@@ -6,12 +6,13 @@ DEPLOY_USER="test"
 DEPLOY_PASSWORD="test@1234"
 
 RUNTIME_DIR="/home/test/tselot_Studio/frontend"
+REMOTE_RESTART="${RUNTIME_DIR}/restart-frontend-nohup.sh"
 ARCHIVE_NAME="frontend-standalone.tar.gz"
 
 TMP_DIR="$(mktemp -d)"
-LOCAL_PACKAGE_DIR="${TMP_DIR}/frontend-package"
+PACKAGE_DIR="${TMP_DIR}/package"
 ARCHIVE_PATH="${TMP_DIR}/${ARCHIVE_NAME}"
-TMP_ENV_FILE="${TMP_DIR}/frontend.remote.env"
+TMP_ENV_FILE="${TMP_DIR}/frontend.env"
 
 cleanup() {
   rm -rf "${TMP_DIR}"
@@ -20,7 +21,7 @@ trap cleanup EXIT
 
 if ! command -v sshpass >/dev/null 2>&1; then
   echo "ERROR: sshpass is required."
-  echo "Install it on Mac with:"
+  echo "Install it with:"
   echo "brew install hudochenkov/sshpass/sshpass"
   exit 1
 fi
@@ -35,13 +36,13 @@ if sshpass -p "${DEPLOY_PASSWORD}" ssh -o StrictHostKeyChecking=no "${DEPLOY_USE
   . "${TMP_ENV_FILE}"
   set +a
 else
-  echo "WARNING: Remote frontend.env not found. Using local/default frontend values."
+  echo "WARNING: Remote frontend.env not found. Build will use local/default env."
 fi
 
 export BACKEND_URL="${BACKEND_URL:-http://127.0.0.1:8484}"
 export NEXT_PUBLIC_API_BASE_URL="${NEXT_PUBLIC_API_BASE_URL:-/api/bff}"
 
-echo "Frontend will build using:"
+echo "Frontend build env:"
 echo "  BACKEND_URL=${BACKEND_URL}"
 echo "  NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL}"
 
@@ -57,47 +58,63 @@ if [ ! -d ".next/standalone" ]; then
   exit 1
 fi
 
-echo "Preparing standalone package in temporary directory..."
-
-mkdir -p "${LOCAL_PACKAGE_DIR}/current"
-
-cp -R .next/standalone/. "${LOCAL_PACKAGE_DIR}/current/"
-
-mkdir -p "${LOCAL_PACKAGE_DIR}/current/.next"
-cp -R .next/static "${LOCAL_PACKAGE_DIR}/current/.next/static"
-
-if [ -d "public" ]; then
-  cp -R public "${LOCAL_PACKAGE_DIR}/current/public"
+if [ ! -f "scripts/restart-frontend-nohup.sh" ]; then
+  echo "ERROR: scripts/restart-frontend-nohup.sh not found."
+  exit 1
 fi
 
-find "${LOCAL_PACKAGE_DIR}" -name "._*" -delete
+echo "Preparing frontend deployment package in temporary directory..."
 
-COPYFILE_DISABLE=1 tar -czf "${ARCHIVE_PATH}" -C "${LOCAL_PACKAGE_DIR}" current
+mkdir -p "${PACKAGE_DIR}/current"
 
-echo "Creating remote frontend directory and cleaning old deployment archive..."
+cp -R .next/standalone/. "${PACKAGE_DIR}/current/"
+
+mkdir -p "${PACKAGE_DIR}/current/.next"
+cp -R .next/static "${PACKAGE_DIR}/current/.next/static"
+
+if [ -d "public" ]; then
+  cp -R public "${PACKAGE_DIR}/current/public"
+fi
+
+find "${PACKAGE_DIR}" -name "._*" -delete
+
+COPYFILE_DISABLE=1 tar -czf "${ARCHIVE_PATH}" -C "${PACKAGE_DIR}" current
+
+echo "Preparing frontend directory on server..."
 sshpass -p "${DEPLOY_PASSWORD}" ssh -o StrictHostKeyChecking=no "${DEPLOY_USER}@${DEPLOY_HOST}" "
   mkdir -p ${RUNTIME_DIR}/logs
-  rm -f ${RUNTIME_DIR}/${ARCHIVE_NAME}
 "
 
-echo "Uploading frontend package..."
-sshpass -p "${DEPLOY_PASSWORD}" scp -o StrictHostKeyChecking=no "${ARCHIVE_PATH}" \
+echo "Uploading restart script..."
+sshpass -p "${DEPLOY_PASSWORD}" scp -o StrictHostKeyChecking=no \
+  scripts/restart-frontend-nohup.sh \
+  "${DEPLOY_USER}@${DEPLOY_HOST}:${REMOTE_RESTART}"
+
+echo "Stopping old frontend and cleaning old files..."
+sshpass -p "${DEPLOY_PASSWORD}" ssh -o StrictHostKeyChecking=no "${DEPLOY_USER}@${DEPLOY_HOST}" "
+  cd ${RUNTIME_DIR}
+  chmod +x restart-frontend-nohup.sh
+  ./restart-frontend-nohup.sh stop-clean
+"
+
+echo "Uploading new frontend package..."
+sshpass -p "${DEPLOY_PASSWORD}" scp -o StrictHostKeyChecking=no \
+  "${ARCHIVE_PATH}" \
   "${DEPLOY_USER}@${DEPLOY_HOST}:${RUNTIME_DIR}/${ARCHIVE_NAME}"
 
-echo "Uploading restart script..."
-sshpass -p "${DEPLOY_PASSWORD}" scp -o StrictHostKeyChecking=no "scripts/restart-frontend-nohup.sh" \
-  "${DEPLOY_USER}@${DEPLOY_HOST}:${RUNTIME_DIR}/restart-frontend-nohup.sh"
-
-echo "Extracting and restarting frontend on server..."
+echo "Extracting new frontend package..."
 sshpass -p "${DEPLOY_PASSWORD}" ssh -o StrictHostKeyChecking=no "${DEPLOY_USER}@${DEPLOY_HOST}" "
-  set -e
   cd ${RUNTIME_DIR}
-  rm -rf current
   tar -xzf ${ARCHIVE_NAME}
   rm -f ${ARCHIVE_NAME}
-  chmod +x restart-frontend-nohup.sh
-  ./restart-frontend-nohup.sh
+"
+
+echo "Starting new frontend..."
+sshpass -p "${DEPLOY_PASSWORD}" ssh -o StrictHostKeyChecking=no "${DEPLOY_USER}@${DEPLOY_HOST}" "
+  cd ${RUNTIME_DIR}
+  ./restart-frontend-nohup.sh start
 "
 
 echo "Frontend deployment complete."
 echo "Frontend URL: http://${DEPLOY_HOST}:3000"
+echo "Log file: ${RUNTIME_DIR}/logs/frontend.log"
