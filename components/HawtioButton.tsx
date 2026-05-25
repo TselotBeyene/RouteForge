@@ -7,10 +7,11 @@ export function HawtioButton() {
   return (
     <button
       onClick={() => window.open(url, "_blank", "noopener,noreferrer")}
-      className="btn-primary"
+      className="btn-primary btn-toolbar"
+      aria-label="Open Hawtio"
     >
       <span className="hidden sm:inline">Hawtio</span>
-      <ExternalLink className="h-4 w-4" />
+      <ExternalLink className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
     </button>
   );
 }
@@ -21,10 +22,11 @@ export function GrafanaButton() {
   return (
     <button
       onClick={() => window.open(url, "_blank", "noopener,noreferrer")}
-      className="btn-primary"
+      className="btn-primary btn-toolbar"
+      aria-label="Open Grafana"
     >
       <span className="hidden sm:inline">Grafana</span>
-      <ExternalLink className="h-4 w-4" />
+      <ExternalLink className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
     </button>
   );
 }

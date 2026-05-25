@@ -1,0 +1,246 @@
+/* Studio Keycloak login — matches Integration Studio (app/globals.css) */
+
+:root {
+  --studio-paper: #f4eedf;
+  --studio-ink: #14151f;
+  --studio-muted: #6b6456;
+  --studio-line: #c9bc9f;
+  --studio-amber: #f5b942;
+  --studio-panel: #fffdf7;
+}
+
+/* ── Page background (v1 + v2) ─────────────────────────────────────────── */
+
+html,
+body,
+.login-pf body,
+body[data-kc-login],
+.pf-v5-c-login__container,
+.pf-c-login__container,
+#kc-login,
+.login-pf-page {
+  min-height: 100vh !important;
+  margin: 0 !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    monospace !important;
+  color: var(--studio-ink) !important;
+  background-color: var(--studio-paper) !important;
+  background-image:
+    linear-gradient(90deg, rgba(20, 20, 20, 0.04) 1px, transparent 1px),
+    linear-gradient(rgba(20, 20, 20, 0.04) 1px, transparent 1px),
+    radial-gradient(circle at 10% 10%, rgba(245, 185, 66, 0.22), transparent 28rem),
+    radial-gradient(circle at 90% 18%, rgba(20, 184, 166, 0.14), transparent 30rem) !important;
+  background-size: 34px 34px, 34px 34px, auto, auto !important;
+}
+
+/* Kill default dark / polygon backgrounds */
+.pf-v5-c-login__main,
+.pf-c-background-image,
+.pf-v5-c-background-image,
+[class*="background-image"],
+.login-pf-page::before,
+.login-pf-page::after {
+  background: transparent !important;
+  background-image: none !important;
+}
+
+.login-pf-page,
+.pf-v5-c-login,
+.pf-c-login {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 100vh !important;
+  padding: 2rem 1rem !important;
+}
+
+/* ── Header / realm ────────────────────────────────────────────────────── */
+
+#kc-header,
+.pf-v5-c-login__header,
+.pf-c-login__header {
+  margin-bottom: 1.25rem !important;
+  text-align: center !important;
+}
+
+#kc-header-wrapper,
+.pf-v5-c-brand,
+.pf-c-brand {
+  font-size: 0 !important;
+  color: transparent !important;
+  background: none !important;
+}
+
+#kc-header-wrapper::before,
+.pf-v5-c-brand::before {
+  content: "Studio";
+  display: block;
+  font-size: 0.7rem !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.22em !important;
+  text-transform: uppercase !important;
+  color: var(--studio-muted) !important;
+  margin-bottom: 0.75rem;
+}
+
+#kc-header-wrapper::after,
+.pf-v5-c-brand::after {
+  content: "";
+  display: block;
+  width: 3rem;
+  height: 3rem;
+  margin: 0 auto;
+  border: 1px solid var(--studio-ink);
+  background: var(--studio-amber);
+  box-shadow: 4px 4px 0 rgba(15, 23, 42, 0.95);
+}
+
+/* ── Card ──────────────────────────────────────────────────────────────── */
+
+.card-pf,
+#kc-content,
+#kc-content-wrapper,
+#kc-form-wrapper,
+.pf-v5-c-login__main,
+.pf-v5-c-login__main-body,
+.pf-c-login__main,
+.pf-c-login__main-body {
+  width: 100% !important;
+  max-width: 28rem !important;
+  border: 1px solid var(--studio-line) !important;
+  background: var(--studio-panel) !important;
+  box-shadow: 10px 10px 0 rgba(30, 28, 23, 0.18) !important;
+  border-radius: 0 !important;
+  padding: 1.5rem 1.75rem 1.75rem !important;
+}
+
+#kc-page-title,
+.login-pf-header h1,
+#kc-form-login h1,
+.pf-v5-c-title,
+.pf-c-title,
+h1#kc-page-title {
+  font-family: inherit !important;
+  font-size: 1.65rem !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.03em !important;
+  text-transform: uppercase !important;
+  color: var(--studio-ink) !important;
+  margin: 0 0 1.25rem !important;
+  line-height: 1.05 !important;
+}
+
+/* ── Labels ────────────────────────────────────────────────────────────── */
+
+.login-pf label,
+.pf-v5-c-form__label,
+.pf-c-form__label,
+label.pf-v5-c-form__label {
+  font-size: 10px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  color: var(--studio-muted) !important;
+}
+
+/* ── Inputs ────────────────────────────────────────────────────────────── */
+
+.login-pf input[type="text"],
+.login-pf input[type="password"],
+.pf-v5-c-form-control,
+.pf-c-form-control,
+input.pf-v5-c-form-control,
+input.pf-c-form-control {
+  width: 100% !important;
+  border: 1px solid var(--studio-line) !important;
+  background: var(--studio-panel) !important;
+  color: var(--studio-ink) !important;
+  border-radius: 0 !important;
+  padding: 0.72rem 0.9rem !important;
+  font-family: inherit !important;
+  font-size: 0.875rem !important;
+  box-shadow: 3px 3px 0 rgba(24, 24, 27, 0.1) !important;
+  margin-top: 0.35rem !important;
+}
+
+.login-pf input:focus,
+.pf-v5-c-form-control:focus,
+.pf-c-form-control:focus {
+  border-color: var(--studio-ink) !important;
+  outline: none !important;
+  box-shadow: 3px 3px 0 rgba(245, 185, 66, 0.45) !important;
+}
+
+/* ── Sign in button ────────────────────────────────────────────────────── */
+
+#kc-login,
+input[type="submit"],
+button#kc-login,
+.pf-v5-c-button.pf-m-primary,
+.pf-c-button.pf-m-primary,
+button.pf-v5-c-button.pf-m-primary {
+  width: 100% !important;
+  margin-top: 1.25rem !important;
+  border: 1px solid var(--studio-ink) !important;
+  background: var(--studio-ink) !important;
+  color: var(--studio-paper) !important;
+  border-radius: 0 !important;
+  padding: 0.85rem 1rem !important;
+  font-family: inherit !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  box-shadow: 4px 4px 0 var(--studio-amber) !important;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+#kc-login:hover,
+input[type="submit"]:hover,
+.pf-v5-c-button.pf-m-primary:hover,
+.pf-c-button.pf-m-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 7px 7px 0 var(--studio-amber) !important;
+  background: var(--studio-ink) !important;
+}
+
+/* ── Links & footer ────────────────────────────────────────────────────── */
+
+#kc-form-options a,
+#kc-registration a,
+.pf-v5-c-login__main-footer a,
+a {
+  color: var(--studio-ink) !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+}
+
+#kc-form-options a:hover,
+a:hover {
+  color: var(--studio-muted) !important;
+}
+
+#kc-info-wrapper,
+.login-pf-footer,
+.pf-v5-c-login__main-footer {
+  margin-top: 1rem !important;
+  text-align: center !important;
+  font-size: 10px !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: var(--studio-muted) !important;
+}
+
+/* ── Alerts ────────────────────────────────────────────────────────────── */
+
+.pf-v5-c-alert,
+.pf-c-alert,
+.alert {
+  border-radius: 0 !important;
+  border: 1px solid var(--studio-line) !important;
+  font-family: inherit !important;
+  font-size: 12px !important;
+}

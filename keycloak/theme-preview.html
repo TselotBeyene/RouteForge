@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Studio Keycloak login — theme preview</title>
+    <link rel="stylesheet" href="themes/studio/login/resources/css/studio-login.css" />
+    <style>
+      /* Preview banner only — not part of the Keycloak theme */
+      .preview-banner {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 10000;
+        padding: 0.5rem 1rem;
+        background: #14151f;
+        color: #f4eedf;
+        font-family: ui-monospace, monospace;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        text-align: center;
+        border-bottom: 3px solid #f5b942;
+      }
+      .login-pf-page {
+        padding-top: 3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="preview-banner">
+      Local preview — open this file in a browser · not the live Keycloak server
+    </div>
+
+    <!-- Mimics Keycloak login page structure -->
+    <div class="login-pf-page">
+      <div id="kc-header">
+        <div id="kc-header-wrapper">STUDIO</div>
+      </div>
+
+      <div class="card-pf" id="kc-content">
+        <div id="kc-content-wrapper">
+          <h1 id="kc-page-title">Sign in to Studio</h1>
+
+          <div id="kc-form">
+            <div id="kc-form-wrapper">
+              <form id="kc-form-login" action="#" method="post">
+                <div class="form-group">
+                  <label for="username">Username or email</label>
+                  <input
+                    id="username"
+                    name="username"
+                    type="text"
+                    autocomplete="username"
+                    placeholder="admin"
+                  />
+                </div>
+
+                <div class="form-group" style="margin-top: 1rem">
+                  <label for="password">Password</label>
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    autocomplete="current-password"
+                  />
+                </div>
+
+                <div id="kc-form-options" style="margin-top: 0.75rem">
+                  <label style="font-size: 11px; text-transform: none; letter-spacing: 0">
+                    <input type="checkbox" name="rememberMe" /> Remember me
+                  </label>
+                  <span style="float: right">
+                    <a href="#">Forgot password?</a>
+                  </span>
+                </div>
+
+                <input type="submit" id="kc-login" value="Sign in" />
+              </form>
+            </div>
+          </div>
+
+          <div id="kc-info-wrapper">
+            Secured by Keycloak · Integration Studio
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

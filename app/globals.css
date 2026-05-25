@@ -66,8 +66,14 @@ body {
   .atlas-panel {
     border: 1px solid hsl(var(--line));
     background: color-mix(in srgb, hsl(var(--panel)) 88%, transparent);
-    box-shadow: 8px 8px 0 rgba(24, 24, 27, 0.12);
+    box-shadow: 4px 4px 0 rgba(24, 24, 27, 0.1);
     backdrop-filter: blur(16px);
+  }
+
+  @media (min-width: 640px) {
+    .atlas-panel {
+      box-shadow: 8px 8px 0 rgba(24, 24, 27, 0.12);
+    }
   }
 
   .atlas-cut {
@@ -89,88 +95,167 @@ body {
 
   .section-title {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-    font-size: clamp(2rem, 4vw, 4rem);
-    line-height: 0.9;
+    font-size: clamp(1.5rem, 5.5vw, 4rem);
+    line-height: 0.95;
     font-weight: 950;
-    letter-spacing: -0.08em;
+    letter-spacing: -0.06em;
     text-transform: uppercase;
     color: hsl(var(--ink));
   }
 
+  @media (min-width: 640px) {
+    .section-title {
+      letter-spacing: -0.08em;
+      line-height: 0.9;
+    }
+  }
+
   .section-subtitle {
-    margin-top: 0.75rem;
+    margin-top: 0.5rem;
     max-width: 42rem;
     color: hsl(var(--muted-ink));
-    font-size: 0.95rem;
-    line-height: 1.75;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+  }
+
+  @media (min-width: 640px) {
+    .section-subtitle {
+      margin-top: 0.75rem;
+      font-size: 0.95rem;
+      line-height: 1.75;
+    }
   }
 
   .micro-label {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-    font-size: 10px;
-    line-height: 1rem;
+    font-size: 9px;
+    line-height: 0.95rem;
     font-weight: 900;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: hsl(var(--muted-ink));
+  }
+
+  @media (min-width: 640px) {
+    .micro-label {
+      font-size: 10px;
+      line-height: 1rem;
+      letter-spacing: 0.22em;
+    }
   }
 
   .btn-primary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 0.35rem;
     border: 1px solid hsl(var(--ink));
     background: hsl(var(--ink));
     color: hsl(var(--paper));
-    padding: 0.72rem 1rem;
+    padding: 0.45rem 0.6rem;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 11px;
+    font-size: 9px;
     font-weight: 900;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    box-shadow: 4px 4px 0 hsl(var(--amber));
+    box-shadow: 3px 3px 0 hsl(var(--amber));
     transition: transform 160ms ease, box-shadow 160ms ease;
+  }
+
+  @media (min-width: 640px) {
+    .btn-primary {
+      gap: 0.5rem;
+      padding: 0.72rem 1rem;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      box-shadow: 4px 4px 0 hsl(var(--amber));
+    }
   }
 
   .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 7px 7px 0 hsl(var(--amber));
+    box-shadow: 5px 5px 0 hsl(var(--amber));
+  }
+
+  @media (min-width: 640px) {
+    .btn-primary:hover {
+      box-shadow: 7px 7px 0 hsl(var(--amber));
+    }
   }
 
   .btn-secondary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 0.35rem;
     border: 1px solid hsl(var(--line));
     background: hsl(var(--panel));
     color: hsl(var(--ink));
-    padding: 0.72rem 1rem;
+    padding: 0.45rem 0.6rem;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 11px;
+    font-size: 9px;
     font-weight: 900;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    box-shadow: 3px 3px 0 rgba(24, 24, 27, 0.14);
+    box-shadow: 2px 2px 0 rgba(24, 24, 27, 0.14);
     transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  }
+
+  @media (min-width: 640px) {
+    .btn-secondary {
+      gap: 0.5rem;
+      padding: 0.72rem 1rem;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      box-shadow: 3px 3px 0 rgba(24, 24, 27, 0.14);
+    }
   }
 
   .btn-secondary:hover {
     transform: translateY(-2px);
     border-color: hsl(var(--ink));
-    box-shadow: 5px 5px 0 rgba(24, 24, 27, 0.18);
+    box-shadow: 4px 4px 0 rgba(24, 24, 27, 0.18);
+  }
+
+  @media (min-width: 640px) {
+    .btn-secondary:hover {
+      box-shadow: 5px 5px 0 rgba(24, 24, 27, 0.18);
+    }
+  }
+
+  .btn-icon {
+    padding: 0.45rem;
+  }
+
+  @media (min-width: 640px) {
+    .btn-icon {
+      padding: 0.72rem;
+    }
+  }
+
+  @media (max-width: 639px) {
+    .btn-toolbar {
+      padding: 0.45rem;
+    }
   }
 
   .input-clean {
     border: 1px solid hsl(var(--line));
     background: hsl(var(--panel));
     color: hsl(var(--ink));
-    padding: 0.72rem 0.9rem;
+    padding: 0.55rem 0.7rem;
     outline: none;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.875rem;
-    box-shadow: 3px 3px 0 rgba(24, 24, 27, 0.10);
+    font-size: 0.8125rem;
+    box-shadow: 2px 2px 0 rgba(24, 24, 27, 0.10);
+  }
+
+  @media (min-width: 640px) {
+    .input-clean {
+      padding: 0.72rem 0.9rem;
+      font-size: 0.875rem;
+      box-shadow: 3px 3px 0 rgba(24, 24, 27, 0.10);
+    }
   }
 
   .input-clean:focus {

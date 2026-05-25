@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { ArrowRight, Braces, Code2, GitBranch, Network, Workflow } from "lucide-react";
+import { ArrowRight, Braces, Code2, GitBranch, Network, Pencil, Workflow } from "lucide-react";
 
 const actions = [
   { icon: Network, title: "Visualize routes", text: "Load a Itas integration from Git through the backend and render its parsed route graph.", href: "/integrations" },
   { icon: Code2, title: "Edit integration source", text: "Select an integration and edit its Git-backed YAML or Java DSL inside the integration workspace.", href: "/integrations" },
   { icon: Braces, title: "View route schemas", text: "Inspect PostgreSQL-backed route metadata, validation flags, schema type/version, and full schema JSON.", href: "/schemas" },
+  { icon: Pencil, title: "Edit schema", text: "Add or update route schema records in PostgreSQL — type, version, validation flags, and JSON payload.", href: "/schemas?add=1" },
   { icon: Workflow, title: "Open Karavan", text: "Launch Apache Camel Karavan from inside the workspace when NEXT_PUBLIC_KARAVAN_URL is configured.", href: "/karavan" },
   { icon: GitBranch, title: "View OpenAPI", text: "Open Swagger UI against the backend OpenAPI endpoint.", href: "/swagger" }
 ];

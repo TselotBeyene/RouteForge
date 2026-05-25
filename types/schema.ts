@@ -12,7 +12,24 @@ export interface IntegrationSchemaSummary {
   schema?: unknown;
 }
 
+export interface IntegrationSchemaPayload {
+  routeId?: string | null;
+  path?: string | null;
+  uri?: string | null;
+  stripPrefix?: number | null;
+  validateSchema?: boolean | null;
+  type: string;
+  version: string;
+  baseVersion?: string | null;
+  base: boolean;
+  enabled: boolean;
+  validFrom: string;
+  validTo?: string | null;
+  schema: unknown;
+}
+
 export interface RouteSchemaEntry {
+  routeIntegrationId?: number;
   routeId?: string;
   path?: string;
   uri?: string;
