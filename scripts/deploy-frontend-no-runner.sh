@@ -8,27 +8,42 @@ DEPLOY_PASSWORD="test@1234"
 RUNTIME_DIR="/home/test/tselot_Studio/frontend"
 ARCHIVE_NAME="frontend-standalone.tar.gz"
 
-echo "Loading frontend.env from server before build..."
+TMP_DIR="$(mktemp -d)"
+LOCAL_PACKAGE_DIR="${TMP_DIR}/frontend-package"
+ARCHIVE_PATH="${TMP_DIR}/${ARCHIVE_NAME}"
+TMP_ENV_FILE="${TMP_DIR}/frontend.remote.env"
 
-TMP_ENV_FILE=".frontend.remote.env"
+cleanup() {
+  rm -rf "${TMP_DIR}"
+}
+trap cleanup EXIT
+
+if ! command -v sshpass >/dev/null 2>&1; then
+  echo "ERROR: sshpass is required."
+  echo "Install it on Mac with:"
+  echo "brew install hudochenkov/sshpass/sshpass"
+  exit 1
+fi
+
+echo "Loading frontend.env from server before build..."
 
 if sshpass -p "${DEPLOY_PASSWORD}" ssh -o StrictHostKeyChecking=no "${DEPLOY_USER}@${DEPLOY_HOST}" "test -f ${RUNTIME_DIR}/frontend.env"; then
   sshpass -p "${DEPLOY_PASSWORD}" scp -o StrictHostKeyChecking=no \
     "${DEPLOY_USER}@${DEPLOY_HOST}:${RUNTIME_DIR}/frontend.env" "${TMP_ENV_FILE}"
 
   set -a
-  . "./${TMP_ENV_FILE}"
+  . "${TMP_ENV_FILE}"
   set +a
-
-  rm -f "${TMP_ENV_FILE}"
 else
-  echo "WARNING: Remote frontend.env not found. Using default backend URL."
+  echo "WARNING: Remote frontend.env not found. Using local/default frontend values."
 fi
 
-export BACKEND_URL="${BACKEND_URL:-${FRONTEND_BACKEND_URL:-${NEXT_PUBLIC_API_BASE_URL:-http://127.0.0.1:8484}}}"
-export NEXT_PUBLIC_API_BASE_URL="${NEXT_PUBLIC_API_BASE_URL:-${BACKEND_URL}}"
+export BACKEND_URL="${BACKEND_URL:-http://127.0.0.1:8484}"
+export NEXT_PUBLIC_API_BASE_URL="${NEXT_PUBLIC_API_BASE_URL:-/api/bff}"
 
-echo "Frontend will build using backend URL: ${BACKEND_URL}"
+echo "Frontend will build using:"
+echo "  BACKEND_URL=${BACKEND_URL}"
+echo "  NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL}"
 
 echo "Installing dependencies..."
 npm install
@@ -42,27 +57,31 @@ if [ ! -d ".next/standalone" ]; then
   exit 1
 fi
 
-echo "Preparing standalone package..."
-rm -rf deploy-output "${ARCHIVE_NAME}"
-mkdir -p deploy-output/current
+echo "Preparing standalone package in temporary directory..."
 
-cp -R .next/standalone/. deploy-output/current/
+mkdir -p "${LOCAL_PACKAGE_DIR}/current"
 
-mkdir -p deploy-output/current/.next
-cp -R .next/static deploy-output/current/.next/static
+cp -R .next/standalone/. "${LOCAL_PACKAGE_DIR}/current/"
+
+mkdir -p "${LOCAL_PACKAGE_DIR}/current/.next"
+cp -R .next/static "${LOCAL_PACKAGE_DIR}/current/.next/static"
 
 if [ -d "public" ]; then
-  cp -R public deploy-output/current/public
+  cp -R public "${LOCAL_PACKAGE_DIR}/current/public"
 fi
 
-tar -czf "${ARCHIVE_NAME}" -C deploy-output current
+find "${LOCAL_PACKAGE_DIR}" -name "._*" -delete
 
-echo "Creating remote frontend directory..."
-sshpass -p "${DEPLOY_PASSWORD}" ssh -o StrictHostKeyChecking=no "${DEPLOY_USER}@${DEPLOY_HOST}" \
-  "mkdir -p ${RUNTIME_DIR}/logs"
+COPYFILE_DISABLE=1 tar -czf "${ARCHIVE_PATH}" -C "${LOCAL_PACKAGE_DIR}" current
+
+echo "Creating remote frontend directory and cleaning old deployment archive..."
+sshpass -p "${DEPLOY_PASSWORD}" ssh -o StrictHostKeyChecking=no "${DEPLOY_USER}@${DEPLOY_HOST}" "
+  mkdir -p ${RUNTIME_DIR}/logs
+  rm -f ${RUNTIME_DIR}/${ARCHIVE_NAME}
+"
 
 echo "Uploading frontend package..."
-sshpass -p "${DEPLOY_PASSWORD}" scp -o StrictHostKeyChecking=no "${ARCHIVE_NAME}" \
+sshpass -p "${DEPLOY_PASSWORD}" scp -o StrictHostKeyChecking=no "${ARCHIVE_PATH}" \
   "${DEPLOY_USER}@${DEPLOY_HOST}:${RUNTIME_DIR}/${ARCHIVE_NAME}"
 
 echo "Uploading restart script..."
@@ -75,6 +94,7 @@ sshpass -p "${DEPLOY_PASSWORD}" ssh -o StrictHostKeyChecking=no "${DEPLOY_USER}@
   cd ${RUNTIME_DIR}
   rm -rf current
   tar -xzf ${ARCHIVE_NAME}
+  rm -f ${ARCHIVE_NAME}
   chmod +x restart-frontend-nohup.sh
   ./restart-frontend-nohup.sh
 "

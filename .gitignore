@@ -30,3 +30,25 @@ pnpm-debug.log*
 
 # macOS
 .DS_Store
+
+# Deployment archives and temp folders
+*.tar.gz
+*.tgz
+*.gz
+frontend-standalone.tar.gz
+frontend-deploy.tar.gz
+deploy-output/
+deploy-frontend-package/
+.frontend.remote.env
+
+# Runtime files
+current/
+current.jar
+app.pid
+logs/
+*.log
+
+# Next/build artifacts
+.next/
+out/
+node_modules/
