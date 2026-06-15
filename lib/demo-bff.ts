@@ -8,7 +8,12 @@ import {
 import { demoOpenApiSpec } from "@/lib/demo-openapi";
 
 function isDemoMode() {
-  return process.env.DEMO_MODE === "true" || process.env.NEXT_PUBLIC_DEMO_MODE === "true";
+  const demoFlag = (value: string | undefined) => value?.trim().toLowerCase() === "true";
+  return demoFlag(process.env.DEMO_MODE) || demoFlag(process.env.NEXT_PUBLIC_DEMO_MODE);
+}
+
+function normalizeRoute(path: string[]) {
+  return `/${(path ?? []).join("/")}`.replace(/\/+$/, "") || "/";
 }
 
 function okJson<T>(body: T, init?: ResponseInit) {
@@ -30,7 +35,7 @@ export function demoBffResponse(request: NextRequest, path: string[]): NextRespo
     return null;
   }
 
-  const route = `/${(path ?? []).join("/")}`;
+  const route = normalizeRoute(path ?? []);
   const method = request.method.toUpperCase();
 
   if (method === "GET" && route === "/api/repository/branches") {
@@ -67,11 +72,17 @@ export function demoBffResponse(request: NextRequest, path: string[]): NextRespo
     return okJson(baseResponse(DEMO_SCHEMA_ROUTES));
   }
 
-  if (method === "GET" && (route === "/v3/api-docs" || route === "/v3/api-docs/")) {
+  if (
+    method === "GET" &&
+    (route === "/v3/api-docs" ||
+      route === "/v3/api-docs/default" ||
+      route.endsWith("/v3/api-docs") ||
+      route.endsWith("/v3/api-docs.yaml"))
+  ) {
     return okJson(demoOpenApiSpec);
   }
 
-  if (method === "GET" && route === "/v3/api-docs/swagger-config") {
+  if (method === "GET" && route.includes("/v3/api-docs/swagger-config")) {
     return okJson({
       configUrl: "/api/bff/v3/api-docs/swagger-config",
       oauth2RedirectUrl: "/swagger/oauth2-redirect.html",
