@@ -1,10 +1,10 @@
 # RouteForge
 
-**Apache Camel Integration Platform** — a personal portfolio project by [Tselot Beyene](https://github.com/TselotBeyene).
+**Apache Camel Integration Platform** — a personal project by [Tselot Beyene](https://github.com/TselotBeyene).
 
 RouteForge is a Next.js frontend for managing Apache Camel integrations on Kubernetes. Browse Git-backed integration services, visualize route graphs, edit YAML/Java DSL sources, manage PostgreSQL route schemas, and launch Karavan or Swagger UI from a single workspace.
 
-**Portfolio demo:** [routeforge.onrender.com](https://routeforge.onrender.com) *(free Render subdomain — auth disabled, backend optional)*
+**Live demo:** [routeforge.onrender.com](https://routeforge.onrender.com) *(free Render subdomain — auth disabled, backend optional)*
 
 ## Screenshots
 
@@ -66,7 +66,7 @@ Copy `.env.example` to `.env.local` and adjust values. Key variables:
 | `KEYCLOAK_CLIENT_SECRET` | OIDC client secret |
 | `NEXTAUTH_SECRET` | NextAuth session encryption secret |
 | `NEXT_PUBLIC_KARAVAN_URL` | Optional Karavan designer URL |
-| `DEMO_MODE` | Set `true` to skip auth for portfolio demos |
+| `DEMO_MODE` | Set `true` to skip auth for public UI demos |
 
 ### Keycloak login theme
 
@@ -89,7 +89,7 @@ npm run typecheck  # TypeScript check
 This repo includes a [`render.yaml`](render.yaml) Blueprint for **https://routeforge.onrender.com**.
 
 1. Push to GitHub, then open [Create Blueprint on Render](https://dashboard.render.com/blueprint/new)
-2. Select your repo and click **Deploy Blueprint** — no Keycloak setup needed for the portfolio demo
+2. Select your repo and click **Deploy Blueprint** — no Keycloak setup needed for demo mode
 3. `DEMO_MODE`, `NEXTAUTH_URL`, and placeholder Keycloak values are preconfigured in `render.yaml`
 4. After deploy, open **https://routeforge.onrender.com**. If you see "suspended", resume the service under **Settings**
 
@@ -115,4 +115,4 @@ keycloak/         Custom Keycloak login theme
 
 ## License
 
-MIT — personal portfolio project. Feel free to reference or fork with attribution.
+MIT — personal project. Feel free to reference or fork with attribution.
