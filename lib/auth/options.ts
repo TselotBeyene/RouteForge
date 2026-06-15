@@ -7,6 +7,17 @@ import {
   refreshKeycloakAccessToken,
 } from "@/lib/auth/keycloak";
 
+function isDemoMode(): boolean {
+  return process.env.DEMO_MODE === "true" || process.env.NEXT_PUBLIC_DEMO_MODE === "true";
+}
+
+function envOrDemoPlaceholder(name: string, placeholder: string): string {
+  const value = process.env[name]?.trim();
+  if (value) return value;
+  if (isDemoMode()) return placeholder;
+  return requiredEnv(name);
+}
+
 function requiredEnv(name: string): string {
   const value = process.env[name];
 
@@ -79,7 +90,9 @@ async function refreshToken(token: JWT): Promise<JWT> {
   }
 }
 
-const keycloakIssuer = normalizeIssuer(requiredEnv("KEYCLOAK_ISSUER"));
+const keycloakIssuer = normalizeIssuer(
+  envOrDemoPlaceholder("KEYCLOAK_ISSUER", "https://auth.example.com/realms/demo")
+);
 const keycloakOidc = keycloakOpenIdEndpoints(keycloakIssuer);
 
 export const authOptions: NextAuthOptions = {
@@ -87,8 +100,8 @@ export const authOptions: NextAuthOptions = {
 
   providers: [
     KeycloakProvider({
-      clientId: requiredEnv("KEYCLOAK_CLIENT_ID"),
-      clientSecret: requiredEnv("KEYCLOAK_CLIENT_SECRET"),
+      clientId: envOrDemoPlaceholder("KEYCLOAK_CLIENT_ID", "routeforge-client"),
+      clientSecret: envOrDemoPlaceholder("KEYCLOAK_CLIENT_SECRET", "not-used-in-demo"),
       issuer: keycloakOidc.issuer,
       // Skip Issuer.discover() — it was timing out at 3.5s when Keycloak is slow or on another network.
       wellKnown: undefined,

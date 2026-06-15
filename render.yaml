@@ -5,8 +5,8 @@ services:
     plan: free
     region: oregon
     branch: main
-    buildCommand: npm ci && npm run build && cp -r .next/static .next/standalone/.next/static && cp -r public .next/standalone/public 2>/dev/null || true
-    startCommand: node .next/standalone/server.js
+    buildCommand: npm ci && npm run build && cp -r .next/static .next/standalone/.next/static && mkdir -p .next/standalone/public && if [ -d public ]; then cp -r public/. .next/standalone/public/; fi
+    startCommand: HOSTNAME=0.0.0.0 node .next/standalone/server.js
     healthCheckPath: /
     envVars:
       - key: NODE_VERSION
@@ -28,6 +28,6 @@ services:
       - key: KEYCLOAK_CLIENT_ID
         value: routeforge-client
       - key: KEYCLOAK_CLIENT_SECRET
-        sync: false
+        value: not-used-in-demo
       - key: KEYCLOAK_ISSUER
-        sync: false
+        value: https://auth.example.com/realms/demo

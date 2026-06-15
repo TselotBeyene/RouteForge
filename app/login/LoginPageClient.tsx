@@ -25,6 +25,7 @@ export function LoginPageClient() {
 
   useEffect(() => {
     if (demoMode) {
+      router.replace(callbackUrl);
       return;
     }
 
