@@ -2,7 +2,7 @@ export const demoOpenApiSpec = {
   openapi: "3.0.3",
   info: {
     title: "RouteForge Integration API",
-    description: "Portfolio demo OpenAPI spec for Camel K integration management.",
+    description: "Demo OpenAPI spec for Camel K integration management.",
     version: "1.0.0",
   },
   servers: [{ url: "/api/bff", description: "RouteForge BFF proxy (demo)" }],

@@ -17,7 +17,7 @@ export default function KaravanPage() {
           <h1 className="section-title">Karavan</h1>
           <p className="section-subtitle">
             {demoMode
-              ? "Apache Camel Karavan online designer (embedded from karavan.space for the portfolio demo)."
+              ? "Apache Camel Karavan online designer (embedded from karavan.space in demo mode)."
               : "Open Apache Camel Karavan from the workspace. Configure the target with NEXT_PUBLIC_KARAVAN_URL."}
           </p>
         </div>

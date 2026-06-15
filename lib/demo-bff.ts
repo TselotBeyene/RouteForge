@@ -1,4 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
+import {
+  DEMO_INTEGRATIONS,
+  DEMO_SCHEMA_ROUTES,
+  demoIntegrationSource,
+  demoRouteGraph,
+} from "@/lib/demo-data";
 import { demoOpenApiSpec } from "@/lib/demo-openapi";
 
 function isDemoMode() {
@@ -18,96 +24,6 @@ function baseResponse<T>(data: T) {
     errorCode: null,
   };
 }
-
-const DEMO_INTEGRATIONS = [
-  {
-    name: "order-sync",
-    namespace: "camel-k",
-    phase: "Running",
-    runtimeVersion: "3.15.0",
-    createdAt: "2025-01-15T10:00:00.000Z",
-  },
-  {
-    name: "payment-gateway",
-    namespace: "camel-k",
-    phase: "Running",
-    runtimeVersion: "3.15.0",
-    createdAt: "2025-02-01T08:30:00.000Z",
-  },
-  {
-    name: "inventory-bridge",
-    namespace: "camel-k",
-    phase: "Building",
-    runtimeVersion: "3.14.2",
-    createdAt: "2025-03-10T14:20:00.000Z",
-  },
-];
-
-const DEMO_SCHEMA_ROUTES = [
-  {
-    routeIntegrationId: 1,
-    routeId: "order-sync.main",
-    path: "/orders",
-    uri: "https://api.example.com/orders",
-    metadataId: 101,
-    validateSchema: true,
-    stripPrefix: 0,
-    schemaId: "order-v1",
-    schema: {
-      id: 1,
-      type: "order",
-      version: "1.0.0",
-      baseVersion: "1.0.0",
-      base: true,
-      enabled: true,
-      validFrom: "2025-01-01",
-      validTo: null,
-      schema: { type: "object", properties: { orderId: { type: "string" } } },
-    },
-  },
-  {
-    routeIntegrationId: 2,
-    routeId: "payment-gateway.webhook",
-    path: "/payments/webhook",
-    uri: "kafka:payments.events",
-    metadataId: 102,
-    validateSchema: true,
-    stripPrefix: 1,
-    schemaId: "payment-v2",
-    schema: {
-      id: 2,
-      type: "payment",
-      version: "2.1.0",
-      baseVersion: "2.0.0",
-      base: false,
-      enabled: true,
-      validFrom: "2025-02-15",
-      validTo: null,
-      schema: { type: "object", properties: { amount: { type: "number" } } },
-    },
-  },
-  {
-    routeIntegrationId: 3,
-    routeId: "inventory-bridge.sync",
-    path: "/inventory/sync",
-    uri: "timer:inventory?period=60000",
-    metadataId: 103,
-    validateSchema: false,
-    stripPrefix: 0,
-    schemaId: "inventory-draft",
-    schema: {
-      id: 3,
-      type: "inventory",
-      version: "0.9.0",
-      baseVersion: "0.9.0",
-      base: true,
-      enabled: false,
-      validFrom: "2025-03-01",
-      validTo: "2025-12-31",
-      schema: { type: "object", properties: { sku: { type: "string" } } },
-    },
-  },
-];
 
 export function demoBffResponse(request: NextRequest, path: string[]): NextResponse | null {
   if (!isDemoMode()) {
@@ -137,21 +53,14 @@ export function demoBffResponse(request: NextRequest, path: string[]): NextRespo
       ...match,
       sourceName: `${name}.yaml`,
       sourceLanguage: "yaml",
-      sourceContent: `- route:\n    id: ${name}\n    from:\n      uri: timer:tick?period=5000\n      steps:\n        - log: Demo integration for portfolio screenshots\n`,
+      sourceContent: demoIntegrationSource(name),
       files: [],
     });
   }
 
   if (method === "GET" && route.startsWith("/api/routes/visualize/")) {
     const name = decodeURIComponent(route.slice("/api/routes/visualize/".length));
-
-    return okJson({
-      nodes: [
-        { id: "from", type: "source", label: "timer:tick", routeId: name },
-        { id: "log", type: "processor", label: "log", routeId: name },
-      ],
-      edges: [{ id: "from-log", source: "from", target: "log" }],
-    });
+    return okJson(demoRouteGraph(name));
   }
 
   if (method === "GET" && route === "/api/integration-schemas/routes") {

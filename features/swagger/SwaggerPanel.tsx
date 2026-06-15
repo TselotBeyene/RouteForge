@@ -14,7 +14,7 @@ export function SwaggerPanel() {
         <h1 className="section-title">Swagger</h1>
         <p className="section-subtitle">
           {demoMode
-            ? "Portfolio demo OpenAPI docs served from the BFF mock backend."
+            ? "Demo OpenAPI docs served from the BFF mock backend."
             : "OpenAPI docs are loaded through the authenticated Next.js BFF proxy."}
         </p>
       </div>
