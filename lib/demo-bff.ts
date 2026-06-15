@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { demoOpenApiSpec } from "@/lib/demo-openapi";
 
 function isDemoMode() {
   return process.env.DEMO_MODE === "true" || process.env.NEXT_PUBLIC_DEMO_MODE === "true";
@@ -155,6 +156,18 @@ export function demoBffResponse(request: NextRequest, path: string[]): NextRespo
 
   if (method === "GET" && route === "/api/integration-schemas/routes") {
     return okJson(baseResponse(DEMO_SCHEMA_ROUTES));
+  }
+
+  if (method === "GET" && (route === "/v3/api-docs" || route === "/v3/api-docs/")) {
+    return okJson(demoOpenApiSpec);
+  }
+
+  if (method === "GET" && route === "/v3/api-docs/swagger-config") {
+    return okJson({
+      configUrl: "/api/bff/v3/api-docs/swagger-config",
+      oauth2RedirectUrl: "/swagger/oauth2-redirect.html",
+      url: "/api/bff/v3/api-docs",
+    });
   }
 
   if (method !== "GET" && method !== "HEAD") {

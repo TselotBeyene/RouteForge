@@ -17,6 +17,8 @@ services:
         value: "true"
       - key: NEXT_PUBLIC_DEMO_MODE
         value: "true"
+      - key: NEXT_PUBLIC_KARAVAN_URL
+        value: https://karavan.space/
       - key: AUTH_TRUST_HOST
         value: "true"
       - key: BACKEND_URL
