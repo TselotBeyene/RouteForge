@@ -86,11 +86,14 @@ npm run typecheck  # TypeScript check
 
 ### Render (recommended)
 
-This repo includes a [`render.yaml`](render.yaml) Blueprint. After pushing to GitHub:
+This repo includes a [`render.yaml`](render.yaml) Blueprint for **https://routeforge.onrender.com**.
 
-1. Open [Create Blueprint on Render](https://dashboard.render.com/blueprint/new?repo=https://github.com/TselotBeyene/RouteForge)
-2. Apply the Blueprint — `DEMO_MODE=true` is preconfigured for portfolio browsing
-3. Set `NEXTAUTH_URL` to your Render service URL (e.g. `https://routeforge.onrender.com`)
+1. Push to GitHub, then open [Create Blueprint on Render](https://dashboard.render.com/blueprint/new)
+2. Select your repo and click **Deploy Blueprint** — no Keycloak setup needed for the portfolio demo
+3. `DEMO_MODE`, `NEXTAUTH_URL`, and placeholder Keycloak values are preconfigured in `render.yaml`
+4. After deploy, open **https://routeforge.onrender.com**. If you see "suspended", resume the service under **Settings**
+
+Visitors browse with mock data and no login. Keycloak is only needed when you turn `DEMO_MODE` off for a real backend.
 
 ### Docker
 
