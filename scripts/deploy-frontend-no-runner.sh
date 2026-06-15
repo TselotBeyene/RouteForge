@@ -5,7 +5,7 @@ DEPLOY_HOST="172.16.0.3"
 DEPLOY_USER="test"
 DEPLOY_PASSWORD="test@1234"
 
-RUNTIME_DIR="/home/test/tselot_Studio/frontend"
+RUNTIME_DIR="/home/test/routeforge/frontend"
 REMOTE_RESTART="${RUNTIME_DIR}/restart-frontend-nohup.sh"
 ARCHIVE_NAME="frontend-standalone.tar.gz"
 

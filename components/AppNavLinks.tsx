@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { studioNav } from "@/lib/studio-nav";
+import { appNav } from "@/lib/app-nav";
 
 function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
@@ -21,15 +21,15 @@ function linkClassName(active: boolean, layout: "horizontal" | "vertical") {
   return `${base} border-transparent text-[hsl(var(--muted-ink))] hover:border-[hsl(var(--line))] hover:bg-[hsl(var(--panel))] hover:text-[hsl(var(--ink))] hover:shadow-[3px_3px_0_rgba(30,28,23,0.10)]`;
 }
 
-export type StudioNavLinksProps = {
+export type AppNavLinksProps = {
   layout?: "horizontal" | "vertical";
   onNavigate?: () => void;
 };
 
-export function StudioNavLinks({
+export function AppNavLinks({
   layout = "horizontal",
   onNavigate,
-}: StudioNavLinksProps) {
+}: AppNavLinksProps) {
   const pathname = usePathname();
 
   return (
@@ -40,7 +40,7 @@ export function StudioNavLinks({
           : "flex items-center gap-2"
       }
     >
-      {studioNav.map(([label, href]) => (
+      {appNav.map(([label, href]) => (
         <Link
           key={href}
           href={href}

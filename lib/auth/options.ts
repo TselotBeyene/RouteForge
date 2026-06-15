@@ -30,7 +30,7 @@ function normalizeIssuer(value: string): string {
     return url.toString().replace(/\/+$/, "");
   } catch {
     throw new Error(
-      `Invalid KEYCLOAK_ISSUER. Expected absolute realm URL like http://172.16.0.58:15080/realms/studio but got: ${value}`
+      `Invalid KEYCLOAK_ISSUER. Expected absolute realm URL like http://localhost:8080/realms/routeforge but got: ${value}`
     );
   }
 }
@@ -96,8 +96,8 @@ export const authOptions: NextAuthOptions = {
         url: keycloakOidc.authorization,
         params: {
           scope: "openid email profile",
-          // Uses keycloak/themes/studio — set Login theme = studio in realm settings.
-          kc_theme: "studio",
+          // Uses keycloak/themes/routeforge — set Login theme = routeforge in realm settings.
+          kc_theme: "routeforge",
         },
       },
       token: keycloakOidc.token,

@@ -4,8 +4,7 @@ import { LogIn } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-
-const LOGOUT_FLAG = "studio-logout";
+import { APP_NAME, LOGOUT_FLAG } from "@/lib/brand";
 
 function readPendingLogout(): boolean {
   if (typeof window === "undefined") return false;
@@ -22,8 +21,13 @@ export function LoginPageClient() {
   const [pendingLogout] = useState(readPendingLogout);
 
   const callbackUrl = searchParams.get("callbackUrl") || "/integrations";
+  const demoMode = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
 
   useEffect(() => {
+    if (demoMode) {
+      return;
+    }
+
     if (loggedOut || sessionExpired) {
       sessionStorage.removeItem(LOGOUT_FLAG);
       void signOut({ redirect: false });
@@ -42,7 +46,7 @@ export function LoginPageClient() {
     if (status === "unauthenticated" && !oauthSignInFailed) {
       void signIn("keycloak", { callbackUrl });
     }
-  }, [status, router, callbackUrl, loggedOut, sessionExpired, pendingLogout, oauthSignInFailed]);
+  }, [status, router, callbackUrl, loggedOut, sessionExpired, pendingLogout, oauthSignInFailed, demoMode]);
 
   if (pendingLogout && !loggedOut && !sessionExpired) {
     return (
@@ -75,7 +79,7 @@ export function LoginPageClient() {
                 You have been logged out
               </h1>
               <p className="mt-4 text-sm text-[hsl(var(--muted-ink))]">
-                Your Integration Studio session has been cleared. Sign in again to continue.
+                Your {APP_NAME} session has been cleared. Sign in again to continue.
               </p>
             </div>
 

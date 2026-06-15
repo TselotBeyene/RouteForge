@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { ArrowRight, Braces, Code2, GitBranch, Network, Pencil, Workflow } from "lucide-react";
+import { APP_NAME, APP_TAGLINE } from "@/lib/brand";
 
 const actions = [
-  { icon: Network, title: "Visualize routes", text: "Load a Itas integration from Git through the backend and render its parsed route graph.", href: "/integrations" },
+  { icon: Network, title: "Visualize routes", text: "Load a Camel integration from Git through the backend and render its parsed route graph.", href: "/integrations" },
   { icon: Code2, title: "Edit integration source", text: "Select an integration and edit its Git-backed YAML or Java DSL inside the integration workspace.", href: "/integrations" },
   { icon: Braces, title: "View route schemas", text: "Inspect PostgreSQL-backed route metadata, validation flags, schema type/version, and full schema JSON.", href: "/schemas" },
   { icon: Pencil, title: "Edit schema", text: "Add or update route schema records in PostgreSQL — type, version, validation flags, and JSON payload.", href: "/schemas?add=1" },
@@ -15,7 +16,7 @@ export default function HomePage() {
     <section className="space-y-7">
       <div className="atlas-panel atlas-cut p-8 lg:p-10">
         <div className="mb-6 flex flex-wrap items-center gap-3">
-          <span className="status-pill bg-[hsl(var(--amber))] text-slate-950">Itas-studio Integration Manager</span>
+          <span className="status-pill bg-[hsl(var(--amber))] text-slate-950">{APP_NAME} · {APP_TAGLINE}</span>
           <span className="status-pill text-teal-700 dark:text-teal-300">Backend API Required</span>
         </div>
         <h1 className="max-w-5xl font-mono text-5xl font-black uppercase leading-[0.92] tracking-[-0.08em] text-[hsl(var(--ink))] sm:text-7xl">

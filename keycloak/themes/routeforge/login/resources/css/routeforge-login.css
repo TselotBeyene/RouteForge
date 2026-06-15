@@ -1,15 +1,13 @@
-/* Studio Keycloak login — matches Integration Studio (app/globals.css) */
+/* RouteForge Keycloak login — matches RouteForge app (app/globals.css) */
 
 :root {
-  --studio-paper: #f4eedf;
-  --studio-ink: #14151f;
-  --studio-muted: #6b6456;
-  --studio-line: #c9bc9f;
-  --studio-amber: #f5b942;
-  --studio-panel: #fffdf7;
+  --forge-paper: #f4eedf;
+  --forge-ink: #14151f;
+  --forge-muted: #6b6456;
+  --forge-line: #c9bc9f;
+  --forge-amber: #f5b942;
+  --forge-panel: #fffdf7;
 }
-
-/* ── Page background (v1 + v2) ─────────────────────────────────────────── */
 
 html,
 body,
@@ -23,8 +21,8 @@ body[data-kc-login],
   margin: 0 !important;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
     monospace !important;
-  color: var(--studio-ink) !important;
-  background-color: var(--studio-paper) !important;
+  color: var(--forge-ink) !important;
+  background-color: var(--forge-paper) !important;
   background-image:
     linear-gradient(90deg, rgba(20, 20, 20, 0.04) 1px, transparent 1px),
     linear-gradient(rgba(20, 20, 20, 0.04) 1px, transparent 1px),
@@ -33,7 +31,6 @@ body[data-kc-login],
   background-size: 34px 34px, 34px 34px, auto, auto !important;
 }
 
-/* Kill default dark / polygon backgrounds */
 .pf-v5-c-login__main,
 .pf-c-background-image,
 .pf-v5-c-background-image,
@@ -55,8 +52,6 @@ body[data-kc-login],
   padding: 2rem 1rem !important;
 }
 
-/* ── Header / realm ────────────────────────────────────────────────────── */
-
 #kc-header,
 .pf-v5-c-login__header,
 .pf-c-login__header {
@@ -74,13 +69,13 @@ body[data-kc-login],
 
 #kc-header-wrapper::before,
 .pf-v5-c-brand::before {
-  content: "Studio";
+  content: "RouteForge";
   display: block;
   font-size: 0.7rem !important;
   font-weight: 900 !important;
   letter-spacing: 0.22em !important;
   text-transform: uppercase !important;
-  color: var(--studio-muted) !important;
+  color: var(--forge-muted) !important;
   margin-bottom: 0.75rem;
 }
 
@@ -91,12 +86,10 @@ body[data-kc-login],
   width: 3rem;
   height: 3rem;
   margin: 0 auto;
-  border: 1px solid var(--studio-ink);
-  background: var(--studio-amber);
+  border: 1px solid var(--forge-ink);
+  background: var(--forge-amber);
   box-shadow: 4px 4px 0 rgba(15, 23, 42, 0.95);
 }
-
-/* ── Card ──────────────────────────────────────────────────────────────── */
 
 .card-pf,
 #kc-content,
@@ -108,8 +101,8 @@ body[data-kc-login],
 .pf-c-login__main-body {
   width: 100% !important;
   max-width: 28rem !important;
-  border: 1px solid var(--studio-line) !important;
-  background: var(--studio-panel) !important;
+  border: 1px solid var(--forge-line) !important;
+  background: var(--forge-panel) !important;
   box-shadow: 10px 10px 0 rgba(30, 28, 23, 0.18) !important;
   border-radius: 0 !important;
   padding: 1.5rem 1.75rem 1.75rem !important;
@@ -126,12 +119,10 @@ h1#kc-page-title {
   font-weight: 900 !important;
   letter-spacing: -0.03em !important;
   text-transform: uppercase !important;
-  color: var(--studio-ink) !important;
+  color: var(--forge-ink) !important;
   margin: 0 0 1.25rem !important;
   line-height: 1.05 !important;
 }
-
-/* ── Labels ────────────────────────────────────────────────────────────── */
 
 .login-pf label,
 .pf-v5-c-form__label,
@@ -141,10 +132,8 @@ label.pf-v5-c-form__label {
   font-weight: 900 !important;
   letter-spacing: 0.18em !important;
   text-transform: uppercase !important;
-  color: var(--studio-muted) !important;
+  color: var(--forge-muted) !important;
 }
-
-/* ── Inputs ────────────────────────────────────────────────────────────── */
 
 .login-pf input[type="text"],
 .login-pf input[type="password"],
@@ -153,9 +142,9 @@ label.pf-v5-c-form__label {
 input.pf-v5-c-form-control,
 input.pf-c-form-control {
   width: 100% !important;
-  border: 1px solid var(--studio-line) !important;
-  background: var(--studio-panel) !important;
-  color: var(--studio-ink) !important;
+  border: 1px solid var(--forge-line) !important;
+  background: var(--forge-panel) !important;
+  color: var(--forge-ink) !important;
   border-radius: 0 !important;
   padding: 0.72rem 0.9rem !important;
   font-family: inherit !important;
@@ -167,12 +156,10 @@ input.pf-c-form-control {
 .login-pf input:focus,
 .pf-v5-c-form-control:focus,
 .pf-c-form-control:focus {
-  border-color: var(--studio-ink) !important;
+  border-color: var(--forge-ink) !important;
   outline: none !important;
   box-shadow: 3px 3px 0 rgba(245, 185, 66, 0.45) !important;
 }
-
-/* ── Sign in button ────────────────────────────────────────────────────── */
 
 #kc-login,
 input[type="submit"],
@@ -182,9 +169,9 @@ button#kc-login,
 button.pf-v5-c-button.pf-m-primary {
   width: 100% !important;
   margin-top: 1.25rem !important;
-  border: 1px solid var(--studio-ink) !important;
-  background: var(--studio-ink) !important;
-  color: var(--studio-paper) !important;
+  border: 1px solid var(--forge-ink) !important;
+  background: var(--forge-ink) !important;
+  color: var(--forge-paper) !important;
   border-radius: 0 !important;
   padding: 0.85rem 1rem !important;
   font-family: inherit !important;
@@ -192,7 +179,7 @@ button.pf-v5-c-button.pf-m-primary {
   font-weight: 900 !important;
   letter-spacing: 0.18em !important;
   text-transform: uppercase !important;
-  box-shadow: 4px 4px 0 var(--studio-amber) !important;
+  box-shadow: 4px 4px 0 var(--forge-amber) !important;
   transition: transform 160ms ease, box-shadow 160ms ease;
 }
 
@@ -201,17 +188,15 @@ input[type="submit"]:hover,
 .pf-v5-c-button.pf-m-primary:hover,
 .pf-c-button.pf-m-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 7px 7px 0 var(--studio-amber) !important;
-  background: var(--studio-ink) !important;
+  box-shadow: 7px 7px 0 var(--forge-amber) !important;
+  background: var(--forge-ink) !important;
 }
-
-/* ── Links & footer ────────────────────────────────────────────────────── */
 
 #kc-form-options a,
 #kc-registration a,
 .pf-v5-c-login__main-footer a,
 a {
-  color: var(--studio-ink) !important;
+  color: var(--forge-ink) !important;
   font-size: 11px !important;
   font-weight: 700 !important;
   letter-spacing: 0.08em !important;
@@ -220,7 +205,7 @@ a {
 
 #kc-form-options a:hover,
 a:hover {
-  color: var(--studio-muted) !important;
+  color: var(--forge-muted) !important;
 }
 
 #kc-info-wrapper,
@@ -231,16 +216,14 @@ a:hover {
   font-size: 10px !important;
   letter-spacing: 0.12em !important;
   text-transform: uppercase !important;
-  color: var(--studio-muted) !important;
+  color: var(--forge-muted) !important;
 }
-
-/* ── Alerts ────────────────────────────────────────────────────────────── */
 
 .pf-v5-c-alert,
 .pf-c-alert,
 .alert {
   border-radius: 0 !important;
-  border: 1px solid var(--studio-line) !important;
+  border: 1px solid var(--forge-line) !important;
   font-family: inherit !important;
   font-size: 12px !important;
 }

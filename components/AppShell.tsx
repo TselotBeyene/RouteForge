@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { IntegrationSidebar } from "@/components/IntegrationSidebar";
 import { IntegrationSidebarPanel } from "@/components/IntegrationSidebarPanel";
 import { MobileNavDrawer } from "@/components/MobileNavDrawer";
-import { StudioNavLinks } from "@/components/StudioNavLinks";
+import { AppNavLinks } from "@/components/AppNavLinks";
 import { TopNavbar } from "@/components/TopNavbar";
 import { useMediaQuery } from "@/lib/use-media-query";
 
@@ -35,7 +35,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <div className="space-y-6">
           <section>
             <h3 className="micro-label mb-3">Navigation</h3>
-            <StudioNavLinks layout="vertical" onNavigate={closeMenu} />
+            <AppNavLinks layout="vertical" onNavigate={closeMenu} />
           </section>
 
           {!isLgUp && (

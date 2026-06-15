@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "@/lib/auth/options";
+import { demoBffResponse } from "@/lib/demo-bff";
 
 export const dynamic = "force-dynamic";
 
@@ -49,6 +50,12 @@ function buildBackendUrl(request: NextRequest, path: string[]) {
 }
 
 async function proxy(request: NextRequest, context: { params: Promise<{ path: string[] }> }) {
+  const { path } = await context.params;
+  const demoResponse = demoBffResponse(request, path ?? []);
+  if (demoResponse) {
+    return demoResponse;
+  }
+
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -83,7 +90,6 @@ async function proxy(request: NextRequest, context: { params: Promise<{ path: st
     return NextResponse.json({ message: "Missing CSRF protection header" }, { status: 403 });
   }
 
-  const { path } = await context.params;
   const target = buildBackendUrl(request, path ?? []);
 
   const headers = new Headers();

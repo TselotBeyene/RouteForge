@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight, Clock, Server, Workflow } from "lucide-react";
+import { APP_NAME } from "@/lib/brand";
 import { IntegrationSummary } from "@/types/platform";
 
 function phaseClass(phase: string) {
@@ -19,7 +20,7 @@ export function IntegrationCard({ integration }: { integration: IntegrationSumma
       </div>
 
       <div className="min-w-0">
-        <div className="micro-label">Itas Studio</div>
+        <div className="micro-label">{APP_NAME}</div>
         <h3 className="mt-2 truncate font-mono text-lg font-black uppercase tracking-[-0.06em] text-[hsl(var(--ink))]">{integration.name}</h3>
       </div>
 

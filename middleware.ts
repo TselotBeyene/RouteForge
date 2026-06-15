@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { getAuthToken } from "@/lib/auth/get-auth-token";
 
 const PUBLIC_PATHS = ["/login", "/api/auth"];
+const DEMO_MODE =
+  process.env.DEMO_MODE === "true" || process.env.NEXT_PUBLIC_DEMO_MODE === "true";
 
 function isPublicPath(pathname: string) {
   return PUBLIC_PATHS.some((path) => pathname === path || pathname.startsWith(`${path}/`));
@@ -14,7 +16,7 @@ function isBffApi(pathname: string) {
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  if (isPublicPath(pathname)) {
+  if (DEMO_MODE || isPublicPath(pathname)) {
     return NextResponse.next();
   }
 

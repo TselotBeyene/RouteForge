@@ -3,7 +3,7 @@ set -euo pipefail
 
 ACTION="${1:-start}"
 
-RUNTIME_DIR="/home/test/tselot_Studio/frontend"
+RUNTIME_DIR="/home/test/routeforge/frontend"
 CURRENT_DIR="${RUNTIME_DIR}/current"
 PID_FILE="${RUNTIME_DIR}/app.pid"
 LOG_DIR="${RUNTIME_DIR}/logs"

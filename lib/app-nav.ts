@@ -1,4 +1,4 @@
-export const studioNav = [
+export const appNav = [
   ["Integrations", "/integrations"],
   ["Schemas", "/schemas"],
   ["Karavan", "/karavan"],

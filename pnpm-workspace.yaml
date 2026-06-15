@@ -1,0 +1,8 @@
+packages:
+  - "."
+
+onlyBuiltDependencies:
+  - esbuild
+onlyBuiltDependenciesFile: .pnpm/onlyBuiltDependencies.json
+allowBuilds:
+  esbuild: true

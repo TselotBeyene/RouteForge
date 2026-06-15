@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { ConfirmActionModal } from "@/components/ConfirmActionModal";
-
-const LOGOUT_FLAG = "studio-logout";
+import { APP_NAME, LOGOUT_FLAG } from "@/lib/brand";
 
 export type LogoutConfirmModalProps = {
   open: boolean;
@@ -31,7 +30,7 @@ export function LogoutConfirmModal({
     <ConfirmActionModal
       open={open}
       eyebrow="Confirm logout"
-      title="Sign out of Studio?"
+      title={`Sign out of ${APP_NAME}?`}
       description="This will sign you out and require you to log in again."
       items={[{ label: "Current session", value: displayName }]}
       confirmLabel="Confirm logout"

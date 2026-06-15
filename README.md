@@ -1,93 +1,123 @@
-# integration-studio
+# RouteForge
 
+**Apache Camel Integration Platform** — a personal portfolio project by [Tselot Beyene](https://github.com/TselotBeyene).
 
+RouteForge is a Next.js frontend for managing Apache Camel integrations on Kubernetes. Browse Git-backed integration services, visualize route graphs, edit YAML/Java DSL sources, manage PostgreSQL route schemas, and launch Karavan or Swagger UI from a single workspace.
+
+**Live demo:** [routeforge.onrender.com](https://routeforge.onrender.com) *(portfolio mode — auth disabled, backend optional)*
+
+## Screenshots
+
+| Home | Integrations |
+|------|--------------|
+| ![RouteForge home](docs/screenshots/home.png) | ![Integrations workspace](docs/screenshots/integrations.png) |
+
+| Schemas | Keycloak login theme |
+|---------|----------------------|
+| ![Schema management](docs/screenshots/schemas.png) | ![Custom login theme](docs/screenshots/login-theme.png) |
+
+## Features
+
+- **Integration catalog** — browse Camel K integrations with live phase and namespace status
+- **Route visualization** — interactive React Flow graphs parsed from integration routes
+- **Source editing** — Monaco editor for Git-backed YAML and Java DSL files
+- **Schema management** — CRUD for PostgreSQL-backed route metadata and JSON schemas
+- **Embedded tooling** — Karavan designer and Swagger UI when backend URLs are configured
+- **Auth** — Keycloak OIDC via NextAuth with a custom-branded login theme
+
+## Tech stack
+
+| Layer | Technologies |
+|-------|-------------|
+| Framework | Next.js 15, React 19, TypeScript |
+| Styling | Tailwind CSS, custom design system |
+| State | Zustand |
+| Visualization | React Flow (`@xyflow/react`) |
+| Editor | Monaco Editor |
+| API | Axios BFF proxy with NextAuth session tokens |
 
 ## Getting started
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+### Prerequisites
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+- Node.js 22+
+- A running Camel K integration backend (Spring Boot)
+- Keycloak realm configured for OIDC (optional for local UI exploration)
 
-## Add your files
+### Install and run
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin http://gitlab.act.com.et/tselotb/integration-studio.git
-git branch -M main
-git push -uf origin main
+```bash
+npm install
+cp .env.example .env.local   # adjust values for your environment
+npm run dev
 ```
 
-## Integrate with your tools
+Open [http://localhost:3000](http://localhost:3000).
 
-- [ ] [Set up project integrations](http://gitlab.act.com.et/tselotb/integration-studio/-/settings/integrations)
+### Environment variables
 
-## Collaborate with your team
+Copy `.env.example` to `.env.local` and adjust values. Key variables:
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+| Variable | Description |
+|----------|-------------|
+| `BACKEND_URL` | Camel K integration backend base URL |
+| `KEYCLOAK_ISSUER` | Keycloak realm issuer URL |
+| `KEYCLOAK_CLIENT_ID` | OIDC client ID |
+| `KEYCLOAK_CLIENT_SECRET` | OIDC client secret |
+| `NEXTAUTH_SECRET` | NextAuth session encryption secret |
+| `NEXT_PUBLIC_KARAVAN_URL` | Optional Karavan designer URL |
+| `DEMO_MODE` | Set `true` to skip auth for portfolio demos |
 
-## Test and Deploy
+### Keycloak login theme
 
-Use the built-in continuous integration in GitLab.
+A custom login theme lives in `keycloak/themes/routeforge`. After deploying the theme to your Keycloak server, set **Login theme** to `routeforge` in realm settings and ensure the OIDC client uses `kc_theme: routeforge` (already configured in `lib/auth/options.ts`).
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+## Scripts
 
-***
+```bash
+npm run dev        # development server
+npm run build      # production build
+npm run start      # start production server
+npm run lint       # ESLint
+npm run typecheck  # TypeScript check
+```
 
-# Editing this README
+## Deploy
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+### Render (recommended)
 
-## Suggestions for a good README
+This repo includes a [`render.yaml`](render.yaml) Blueprint. After pushing to GitHub:
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+1. Open [Create Blueprint on Render](https://dashboard.render.com/blueprint/new?repo=https://github.com/TselotBeyene/RouteForge)
+2. Apply the Blueprint — `DEMO_MODE=true` is preconfigured for portfolio browsing
+3. Set `NEXTAUTH_URL` to your Render service URL (e.g. `https://routeforge.onrender.com`)
 
-## Name
-Choose a self-explaining name for your project.
+### Vercel
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+```bash
+npx vercel
+```
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+Set `DEMO_MODE=true` in project environment variables for a public UI demo without Keycloak.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+### Docker
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+```bash
+docker build -t routeforge .
+docker run -p 3000:3000 --env-file .env.local routeforge
+```
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+## Project structure
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+```
+app/              Next.js App Router pages and API routes
+components/       Shared UI (navbar, cards, modals)
+features/         Feature modules (schemas, visualization, swagger)
+lib/              Auth, API client, navigation, brand constants
+services/         Backend API service layer
+keycloak/         Custom Keycloak login theme
+```
 
 ## License
-For open source projects, say how it is licensed.
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+MIT — personal portfolio project. Feel free to reference or fork with attribution.

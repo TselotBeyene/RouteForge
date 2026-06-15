@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { Boxes, Menu } from "lucide-react";
 import { GrafanaButton, HawtioButton } from "@/components/HawtioButton";
-import { StudioNavLinks } from "@/components/StudioNavLinks";
+import { AppNavLinks } from "@/components/AppNavLinks";
+import { APP_NAME, APP_TAGLINE } from "@/lib/brand";
 import { UserMenu } from "@/components/UserMenu";
 
 export type TopNavbarProps = {
@@ -30,17 +31,17 @@ export function TopNavbar({ onMenuOpen }: TopNavbarProps) {
             </span>
             <div className="min-w-0">
               <div className="font-mono text-xs font-black uppercase tracking-[-0.02em] sm:text-sm">
-                Studio
+                {APP_NAME}
               </div>
               <div className="micro-label hidden md:block">
-                integration management
+                {APP_TAGLINE.toLowerCase()}
               </div>
             </div>
           </Link>
         </div>
 
         <div className="hidden xl:block">
-          <StudioNavLinks />
+          <AppNavLinks />
         </div>
 
         <div className="flex shrink-0 items-center gap-1 sm:gap-2 xl:gap-4">

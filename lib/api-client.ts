@@ -4,6 +4,7 @@ let authRedirectInProgress = false;
 
 function redirectToSessionExpired() {
   if (typeof window === "undefined" || authRedirectInProgress) return;
+  if (process.env.NEXT_PUBLIC_DEMO_MODE === "true") return;
 
   authRedirectInProgress = true;
   const callbackUrl = `${window.location.pathname}${window.location.search}`;

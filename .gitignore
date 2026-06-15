@@ -51,4 +51,9 @@ logs/
 # Next/build artifacts
 .next/
 out/
+dist/
 node_modules/
+
+# Local secrets (use .env.example as a template)
+frontend.env
+.env.local
