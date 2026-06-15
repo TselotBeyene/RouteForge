@@ -22,7 +22,7 @@ services:
       - key: BACKEND_URL
         value: http://127.0.0.1:8484
       - key: NEXTAUTH_URL
-        sync: false
+        value: https://routeforge.onrender.com
       - key: NEXTAUTH_SECRET
         generateValue: true
       - key: KEYCLOAK_CLIENT_ID

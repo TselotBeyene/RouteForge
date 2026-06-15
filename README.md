@@ -4,7 +4,7 @@
 
 RouteForge is a Next.js frontend for managing Apache Camel integrations on Kubernetes. Browse Git-backed integration services, visualize route graphs, edit YAML/Java DSL sources, manage PostgreSQL route schemas, and launch Karavan or Swagger UI from a single workspace.
 
-**Live demo:** [routeforge.onrender.com](https://routeforge.onrender.com) *(portfolio mode — auth disabled, backend optional)*
+**Portfolio demo:** [routeforge.onrender.com](https://routeforge.onrender.com) *(free Render subdomain — auth disabled, backend optional)*
 
 ## Screenshots
 
@@ -91,14 +91,6 @@ This repo includes a [`render.yaml`](render.yaml) Blueprint. After pushing to Gi
 1. Open [Create Blueprint on Render](https://dashboard.render.com/blueprint/new?repo=https://github.com/TselotBeyene/RouteForge)
 2. Apply the Blueprint — `DEMO_MODE=true` is preconfigured for portfolio browsing
 3. Set `NEXTAUTH_URL` to your Render service URL (e.g. `https://routeforge.onrender.com`)
-
-### Vercel
-
-```bash
-npx vercel
-```
-
-Set `DEMO_MODE=true` in project environment variables for a public UI demo without Keycloak.
 
 ### Docker
 
